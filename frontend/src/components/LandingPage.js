@@ -4,7 +4,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   Scan, Shield, Cpu, AlertTriangle, CheckCircle2, ArrowRight,
-  Eye, Wifi, Lock, Zap, BarChart3, Users, Download, Clock,
+  Eye, Wifi, Zap, BarChart3, Users, Download, Clock,
   Camera, Network, Database, Code2, Layers, Target, Globe,
   ChevronDown, Play
 } from 'lucide-react';
@@ -295,7 +295,7 @@ export default function LandingPage() {
               <div className="lp__hero-terminal">
                 <TerminalTyper lines={TERMINAL_LINES} />
                 <div className="lp__logic-box">
-                  <div className="lp__logic-comment"><span>{"// VALIDATION LOGIC"}</span></div>
+                  <div className="lp__logic-comment">// VALIDATION LOGIC</div>
                   <div><span style={{ color: 'var(--amber)' }}>IF</span> <span style={{ color: 'var(--cyan)' }}>(faceRecognized)</span></div>
                   <div style={{ paddingLeft: 16 }}><span style={{ color: 'var(--amber)' }}>AND</span> <span style={{ color: 'var(--cyan)' }}>(macAddressDetected)</span></div>
                   <div><span style={{ color: 'var(--amber)' }}>THEN</span> → <span style={{ color: 'var(--green)' }}>MARK PRESENT ✅</span></div>
@@ -330,7 +330,7 @@ export default function LandingPage() {
       <section id="problem" className="lp__problem-section">
         <div className="lp__container">
           <div className="lp__section-head" data-lp-reveal>
-            <div className="lp__section-label">{"01 // Problem Space"}</div>
+            <div className="lp__section-label">01 // Problem Space</div>
             <h2 className="lp__section-title">The Flaws in Traditional Attendance</h2>
           </div>
           <div className="lp__problem-grid" data-lp-stagger>
@@ -349,7 +349,7 @@ export default function LandingPage() {
       <section id="workflow" className="lp__workflow-section">
         <div className="lp__container">
           <div className="lp__section-head" data-lp-reveal>
-            <div className="lp__section-label">{"02 // Protocol"}</div>
+            <div className="lp__section-label">02 // Protocol</div>
             <h2 className="lp__section-title">Two Checks. Zero Loopholes.</h2>
             <p className="lp__section-sub">Every attendance mark requires both conditions simultaneously true. One failure — no attendance. Always.</p>
           </div>
@@ -377,7 +377,7 @@ export default function LandingPage() {
       <section id="features" className="lp__features-section">
         <div className="lp__container">
           <div className="lp__section-head" data-lp-reveal>
-            <div className="lp__section-label">{"03 // Capabilities"}</div>
+            <div className="lp__section-label">03 // Capabilities</div>
             <h2 className="lp__section-title">Why Upastithi-Pramaan is Different</h2>
           </div>
           <div className="lp__features-grid" data-lp-stagger>
@@ -398,7 +398,7 @@ export default function LandingPage() {
       <section id="tech" className="lp__tech-section">
         <div className="lp__container">
           <div className="lp__section-head" data-lp-reveal>
-            <div className="lp__section-label">{"04 // Stack"}</div>
+            <div className="lp__section-label">04 // Stack</div>
             <h2 className="lp__section-title">Built on Industry-Standard Technology</h2>
           </div>
           <div className="lp__tech-grid" data-lp-stagger>
@@ -419,7 +419,7 @@ export default function LandingPage() {
       <section className="lp__sdg-section">
         <div className="lp__container">
           <div className="lp__section-head" data-lp-reveal>
-            <div className="lp__section-label">{"05 // Impact"}</div>
+            <div className="lp__section-label">05 // Impact</div>
             <h2 className="lp__section-title">Building for a Better World</h2>
           </div>
           <div className="lp__sdg-grid" data-lp-stagger>
@@ -446,7 +446,7 @@ export default function LandingPage() {
       <section id="team" className="lp__team-section">
         <div className="lp__container">
           <div className="lp__section-head" data-lp-reveal>
-            <div className="lp__section-label">{"06 // Team"}</div>
+            <div className="lp__section-label">06 // Team</div>
             <h2 className="lp__section-title">The Engineers Behind the System</h2>
             <p className="lp__section-sub" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem' }}>Fr. CRCE · Dept. Computer Engineering · Division B</p>
           </div>
