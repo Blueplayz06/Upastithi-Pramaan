@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
 import {
-  Scan, Users, Shield, Database, BarChart2, Settings,
+  Scan, Users, Shield, Database, BarChart2,
   CheckCircle2, AlertTriangle, Activity, LogOut, UserPlus,
-  Trash2, Search, Filter, Download, RefreshCw,
-  ChevronRight, Bell, Smartphone, FileText, TrendingUp, Menu, X, Loader
+  Trash2, Search, Download, RefreshCw,
+  ChevronRight, Bell, Smartphone, FileText, Menu, X, Loader
 } from 'lucide-react';
 import { adminApi, clearAuth, downloadBlob } from '../api';
 import { useAuth } from '../context/AuthContext';
