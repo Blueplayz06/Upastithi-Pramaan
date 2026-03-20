@@ -490,7 +490,7 @@ export default function LandingPage() {
               <div className="lp__footer-brand">UPASTITHI-PRAMAAN</div>
               <div className="lp__footer-sub">Fr. CRCE · Computer Engineering · Group 10268-10275-10283-10287</div>
             </div>
-            <div className="lp__footer-copy">© 2025 Upastithi-Pramaan · SDG 4 · SDG 9</div>
+            <div className="lp__footer-copy">© 2026 Upastithi-Pramaan · SDG 4 · SDG 9</div>
           </div>
         </div>
       </footer>

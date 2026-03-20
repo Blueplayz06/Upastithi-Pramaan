@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Dark background filling entire block -->
+  <rect width="32" height="32" fill="#040C14"/>
+  
+  <!-- Scan bracket corners — cyan, scaled to edges -->
+  <!-- Top-left -->
+  <path d="M3 11 L3 3 L11 3" stroke="#00C8FF" stroke-width="2.5" fill="none" stroke-linecap="square"/>
+  <!-- Top-right -->
+  <path d="M29 11 L29 3 L21 3" stroke="#00C8FF" stroke-width="2.5" fill="none" stroke-linecap="square"/>
+  <!-- Bottom-left -->
+  <path d="M3 21 L3 29 L11 29" stroke="#00C8FF" stroke-width="2.5" fill="none" stroke-linecap="square"/>
+  <!-- Bottom-right -->
+  <path d="M29 21 L29 29 L21 29" stroke="#00C8FF" stroke-width="2.5" fill="none" stroke-linecap="square"/>
+
+  <!-- Center pulse dot -->
+  <circle cx="16" cy="16" r="3.5" fill="#00C8FF"/>
+  <!-- Outer ring -->
+  <circle cx="16" cy="16" r="7" stroke="#00C8FF" stroke-width="1.5" fill="none" opacity="0.6"/>
+</svg>
