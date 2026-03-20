@@ -4,8 +4,31 @@ Reads SUPABASE_URL and SUPABASE_SERVICE_KEY from .env.
 The service-role key bypasses RLS — keep it server-side only.
 """
 import os
+import time
 from functools import lru_cache
 from dotenv import load_dotenv
+
+# ── Patch: Prevent Fastapi Thread Starvation & Errno 11 ──────────────────────
+import httpx
+try:
+    import anyio.to_thread
+    anyio.to_thread.current_default_thread_limiter().total_tokens = 100
+except Exception:
+    pass
+
+_original_send = httpx.Client.send
+def _resilient_send(self, request, *args, **kwargs):
+    retries = 3
+    for attempt in range(retries):
+        try:
+            return _original_send(self, request, *args, **kwargs)
+        except (httpx.ReadError, httpx.ConnectError, httpx.PoolTimeout) as e:
+            if attempt == retries - 1:
+                raise
+            time.sleep(0.5 * (2 ** attempt))
+httpx.Client.send = _resilient_send
+# ─────────────────────────────────────────────────────────────────────────────
+
 from supabase import create_client, Client
 
 load_dotenv()
