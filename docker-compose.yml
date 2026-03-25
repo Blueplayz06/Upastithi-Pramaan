@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+      # If you have an .env file, you can load it here
+      # env_file:
+      #   - ./backend/.env
+      # Example default values that you can override:
+      # environment:
+      #  SUPABASE_URL: "your_supabase_url"
+      #  SUPABASE_KEY: "your_supabase_key"
+    volumes:
+      - ./backend:/app # For development, not strictly necessary for prod
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
