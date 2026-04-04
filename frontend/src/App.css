@@ -1,0 +1,25 @@
+/* ═══════════════════════════════════════
+   UPASTITHI-PRAMAAN :: APP STYLES
+═══════════════════════════════════════ */
+
+/* ── Section padding responsive ── */
+@media (max-width: 768px) {
+  section {
+    padding-top: 80px !important;
+    padding-bottom: 80px !important;
+  }
+}
+
+/* ── Stat grid responsive ── */
+@media (max-width: 640px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .stats-grid > div:nth-child(2) {
+    border-right: none !important;
+  }
+  .stats-grid > div:nth-child(1),
+  .stats-grid > div:nth-child(2) {
+    border-bottom: 1px solid var(--border);
+  }
+}
