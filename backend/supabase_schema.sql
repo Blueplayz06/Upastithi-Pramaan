@@ -61,6 +61,7 @@ create table if not exists sessions (
   active                  boolean default true,
   twofa_code              text,                       -- rotating 6-digit 2FA code
   twofa_code_expires_at   timestamptz,                -- when the code expires (UTC)
+  hotspot_ssid            text,                       -- faculty Wi-Fi SSID for proximity check
   created_at              timestamptz default now()
 );
 

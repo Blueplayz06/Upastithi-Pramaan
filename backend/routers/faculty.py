@@ -117,14 +117,18 @@ def start_session(body: SessionStart, user: dict = Depends(faculty_only)):
     code = _generate_code()
     expires_at = (datetime.now(timezone.utc) + timedelta(seconds=_CODE_TTL_SECONDS)).isoformat()
 
-    res = db.table("sessions").insert({
+    insert_data = {
         "subject_id":            body.subject_id,
         "faculty_id":            user["sub"],
         "started_at":            datetime.now(timezone.utc).isoformat(),
         "active":                True,
         "twofa_code":            code,
         "twofa_code_expires_at": expires_at,
-    }).execute()
+    }
+    if body.hotspot_ssid:
+        insert_data["hotspot_ssid"] = body.hotspot_ssid
+
+    res = db.table("sessions").insert(insert_data).execute()
 
     db.table("audit_logs").insert({
         "actor_id": user["sub"],

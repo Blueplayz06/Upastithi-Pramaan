@@ -14,6 +14,7 @@ class FacultyProfile(BaseModel):
 
 class SessionStart(BaseModel):
     subject_id: str
+    hotspot_ssid: Optional[str] = None   # Wi-Fi SSID for proximity verification
 
 
 class SessionOut(BaseModel):

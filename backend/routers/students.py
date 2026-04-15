@@ -8,7 +8,7 @@ import io
 
 from database import get_supabase, safe_data
 from dependencies import require_role
-from models.student import DeviceChangeRequest, DisputeCreate, MarkAttendanceRequest
+from models.student import DeviceChangeRequest, DisputeCreate, MarkAttendanceRequest, Verify2FARequest
 from datetime import datetime, timezone
 
 router = APIRouter()
@@ -102,13 +102,18 @@ def mark_attendance(body: MarkAttendanceRequest, user: dict = Depends(student_on
     
     # 1. Verify session is active and fetch 2FA data
     session_res = db.table("sessions").select(
-        "id, active, twofa_code, twofa_code_expires_at"
+        "id, active, twofa_code, twofa_code_expires_at, hotspot_ssid"
     ).eq("id", body.session_id).maybe_single().execute()
     session_data = safe_data(session_res)
     if not session_data:
         raise HTTPException(404, "Session not found")
     if not session_data.get("active"):
         raise HTTPException(400, "Session is no longer active")
+
+    # 1b. Server-side Wi-Fi proximity enforcement
+    # If faculty configured a hotspot SSID, the student app MUST have verified Wi-Fi proximity
+    if session_data.get("hotspot_ssid") and not body.wifi_verified:
+        raise HTTPException(403, "Wi-Fi proximity verification is required. You must be in range of the faculty's hotspot.")
 
     # 2. Validate 2FA code
     stored_code = session_data.get("twofa_code")
@@ -151,8 +156,8 @@ def mark_attendance(body: MarkAttendanceRequest, user: dict = Depends(student_on
     # Decode image, run through face embedding, compare with DB.
     # Mocking for now as the actual model requires heavy dependencies:
     import random
-    # 80% chance of successful match
-    is_match = random.random() > 0.2
+    # Temporarily force 100% successful face match until actual ML model is deployed
+    is_match = True
     if not is_match:
         raise HTTPException(403, "Face verification failed. Please try again in better lighting.")
 
@@ -171,6 +176,36 @@ def mark_attendance(body: MarkAttendanceRequest, user: dict = Depends(student_on
     }).execute()
 
     return {"message": "Attendance marked successfully"}
+
+
+@router.post("/me/verify-2fa")
+def verify_2fa_code(body: Verify2FARequest, user: dict = Depends(student_only)):
+    db = get_supabase()
+    session_res = db.table("sessions").select(
+        "active, twofa_code, twofa_code_expires_at"
+    ).eq("id", body.session_id).maybe_single().execute()
+    data = safe_data(session_res)
+    
+    if not data:
+        raise HTTPException(404, "Session not found. It may have been ended by the faculty.")
+    if not data.get("active"):
+        raise HTTPException(400, "Session is no longer active. Ask your faculty to start a new session.")
+
+    stored_code = data.get("twofa_code")
+    if not stored_code:
+        raise HTTPException(400, "No 2FA code is set for this session. Ask your faculty to refresh the code.")
+
+    # Compare codes — strip whitespace from both sides to prevent mismatch
+    if not body.twofa_code or body.twofa_code.strip() != stored_code.strip():
+        raise HTTPException(403, "Invalid 2FA code. Please check the code displayed by your faculty.")
+        
+    expires_at_str = data.get("twofa_code_expires_at")
+    if expires_at_str:
+        expires_at = datetime.fromisoformat(expires_at_str.replace("Z", "+00:00"))
+        if datetime.now(timezone.utc) > expires_at:
+            raise HTTPException(403, "The 2FA code has expired. Ask your faculty for the new code.")
+            
+    return {"message": "Code is valid"}
 
 
 # ── Active Session Checkout ───────────────────────────────────────────────────
@@ -196,7 +231,7 @@ def get_my_active_session(user: dict = Depends(student_only)):
 
     # Get active sessions for those subjects
     sessions_res = db.table("sessions").select(
-        "id, started_at, subject_id, faculty:faculty_id(name)"
+        "id, started_at, subject_id, hotspot_ssid, faculty:faculty_id(name)"
     ).in_("subject_id", subject_ids).eq("active", True).execute()
     
     active_sessions = safe_data(sessions_res) or []
@@ -217,7 +252,8 @@ def get_my_active_session(user: dict = Depends(student_only)):
                 "subject_code": subject["code"] if subject else "Unknown",
                 "subject_name": subject["name"] if subject else "Unknown",
                 "faculty_name": fac_name,
-                "started_at": sess["started_at"]
+                "started_at": sess["started_at"],
+                "hotspot_ssid": sess.get("hotspot_ssid"),
             }
             
     return None

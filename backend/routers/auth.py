@@ -28,6 +28,8 @@ def login(body: LoginRequest):
     db = get_supabase()
 
     role = body.role.lower()
+    # Trim whitespace from ID (username) — password is intentionally NOT trimmed
+    login_id = body.id.strip()
     if role not in ("student", "faculty", "admin"):
         raise HTTPException(status_code=400, detail="role must be student, faculty or admin")
 
@@ -36,7 +38,7 @@ def login(body: LoginRequest):
         res = (
             db.table("students")
             .select("*, users!inner(password_hash, role)")
-            .eq("roll", body.id)
+            .eq("roll", login_id)
             .maybe_single()
             .execute()
         )
@@ -62,7 +64,7 @@ def login(body: LoginRequest):
         res = (
             db.table("faculty")
             .select("*, users!inner(password_hash, role)")
-            .eq("emp_id", body.id)
+            .eq("emp_id", login_id)
             .maybe_single()
             .execute()
         )
@@ -85,7 +87,7 @@ def login(body: LoginRequest):
         res = (
             db.table("users")
             .select("*")
-            .eq("admin_id", body.id)
+            .eq("admin_id", login_id)
             .eq("role", "admin")
             .maybe_single()
             .execute()

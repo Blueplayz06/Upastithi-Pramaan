@@ -33,6 +33,12 @@ class MarkAttendanceRequest(BaseModel):
     mac_address: str
     image_base64: Optional[str] = None
     twofa_code: Optional[str] = None
+    wifi_verified: bool = False
+
+
+class Verify2FARequest(BaseModel):
+    session_id: str
+    twofa_code: str
 
 
 class AttendanceSummary(BaseModel):
