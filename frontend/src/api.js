@@ -3,7 +3,7 @@
  * Base URL reads from REACT_APP_API_URL env var, defaults to localhost:8000.
  */
 
-const BASE_URL = process.env.REACT_APP_API_URL || ;
+const BASE_URL = process.env.REACT_APP_API_URL || 'https://kts0ffyn5g.execute-api.ap-south-1.amazonaws.com' ;
 
 /** Return the stored JWT token (or null). */
 export const getToken = () => localStorage.getItem('up_token');
