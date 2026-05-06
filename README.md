@@ -163,9 +163,9 @@ npx expo start
 
 | Role Level | Identity Code | Default Password | Access Tier |
 | :--- | :--- | :--- | :--- |
-| **System Admin** | `ADM-001` | `admin@123` | Master configuration, Dispute management, Analytics |
-| **Faculty Member** | *(Add via Admin)* | `frcrce@123` | Session management, Defaulter tracking, Analytics |
-| **Student** | *(Enroll via Admin)* | `frcrce@123` | Attendance verification, Self-tracking, Device Requests |
+| **System Admin** | `ADM-001` | `********` | Master configuration, Dispute management, Analytics |
+| **Faculty Member** | *(Add via Admin)* | `********` | Session management, Defaulter tracking, Analytics |
+| **Student** | *(Enroll via Admin)* | `********` | Attendance verification, Self-tracking, Device Requests |
 
 *(Note: Passwords are hashed in Supabase via 72-byte bcrypt salts. Please cycle defaults upon production launch.)*
 
