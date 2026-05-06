@@ -163,7 +163,7 @@ npx expo start
 
 | Role Level | Identity Code | Default Password | Access Tier |
 | :--- | :--- | :--- | :--- |
-| **System Admin** | `ADM-001` | `********` | Master configuration, Dispute management, Analytics |
+| **System Admin** | `ADMIN` | `********` | Master configuration, Dispute management, Analytics |
 | **Faculty Member** | *(Add via Admin)* | `********` | Session management, Defaulter tracking, Analytics |
 | **Student** | *(Enroll via Admin)* | `********` | Attendance verification, Self-tracking, Device Requests |
 
